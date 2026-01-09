@@ -1,0 +1,158 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo -->
+    <div class="login-logo">M</div>
+
+    <!-- Titre -->
+    <h1 class="login-title">
+      {{ isLoginMode ? 'Bienvenue !' : 'Rejoignez-nous' }}
+    </h1>
+    <p class="login-subtitle">
+      {{ isLoginMode ? 'Connectez-vous pour gérer vos memes' : 'Créez un compte pour commencer' }}
+    </p>
+
+    <!-- Messages -->
+    @if (errorMessage) {
+      <div class="alert alert-error">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (successMessage) {
+      <div class="alert alert-success">
+        {{ successMessage }}
+      </div>
+    }
+
+    <!-- Formulaire de connexion -->
+    @if (isLoginMode) {
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Adresse e-mail"
+            class="form-input"
+            [class.error]="hasError('email', loginForm)"
+          />
+          @if (hasError('email', loginForm)) {
+            <span class="form-error">{{ getErrorMessage('email', loginForm) }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Mot de passe"
+            class="form-input"
+            [class.error]="hasError('password', loginForm)"
+          />
+          @if (hasError('password', loginForm)) {
+            <span class="form-error">{{ getErrorMessage('password', loginForm) }}</span>
+          }
+        </div>
+
+        <button type="submit" [disabled]="isLoading" class="btn-primary">
+          @if (isLoading) {
+            Connexion...
+          } @else {
+            Se connecter
+          }
+        </button>
+      </form>
+    } @else {
+      <!-- Formulaire d'inscription -->
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="first_name"
+              placeholder="Prénom"
+              class="form-input"
+              [class.error]="hasError('first_name', registerForm)"
+            />
+            @if (hasError('first_name', registerForm)) {
+              <span class="form-error">{{ getErrorMessage('first_name', registerForm) }}</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="last_name"
+              placeholder="Nom"
+              class="form-input"
+              [class.error]="hasError('last_name', registerForm)"
+            />
+            @if (hasError('last_name', registerForm)) {
+              <span class="form-error">{{ getErrorMessage('last_name', registerForm) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Adresse e-mail"
+            class="form-input"
+            [class.error]="hasError('email', registerForm)"
+          />
+          @if (hasError('email', registerForm)) {
+            <span class="form-error">{{ getErrorMessage('email', registerForm) }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Mot de passe (8 caractères min.)"
+            class="form-input"
+            [class.error]="hasError('password', registerForm)"
+          />
+          @if (hasError('password', registerForm)) {
+            <span class="form-error">{{ getErrorMessage('password', registerForm) }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Confirmer le mot de passe"
+            class="form-input"
+            [class.error]="hasError('confirmPassword', registerForm)"
+          />
+          @if (hasError('confirmPassword', registerForm)) {
+            <span class="form-error">{{ getErrorMessage('confirmPassword', registerForm) }}</span>
+          }
+        </div>
+
+        <button type="submit" [disabled]="isLoading" class="btn-primary">
+          @if (isLoading) {
+            Inscription...
+          } @else {
+            S'inscrire
+          }
+        </button>
+
+        <p class="login-terms">
+          En continuant, vous acceptez nos conditions d'utilisation
+        </p>
+      </form>
+    }
+
+    <!-- Séparateur -->
+    <div class="divider">
+      <span>OU</span>
+    </div>
+
+    <!-- Bouton bascule -->
+    <p class="link-text" (click)="toggleMode()">
+      {{ isLoginMode ? 'Pas encore membre ? S\'inscrire' : 'Déjà membre ? Se connecter' }}
+    </p>
+  </div>
+</div>

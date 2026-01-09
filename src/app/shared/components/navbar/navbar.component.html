@@ -1,0 +1,89 @@
+<nav class="pinterest-nav">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a [routerLink]="['/gallery']" class="logo-pinterest">
+      M
+    </a>
+
+    <!-- Navigation -->
+    <a [routerLink]="['/gallery']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-item">
+      Accueil
+    </a>
+
+    @if (isAuthenticated) {
+      <a [routerLink]="['/create-meme']" class="nav-item">
+        Créer
+      </a>
+    }
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Rechercher"
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <!-- Actions -->
+    @if (isAuthenticated && currentUser) {
+      <!-- Bouton Favoris -->
+      <a 
+        [routerLink]="['/profile']" 
+        [queryParams]="{ tab: 'saved' }"
+        class="btn-icon"
+        title="Mes favoris"
+      >
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+        </svg>
+      </a>
+
+      <!-- Notifications -->
+      <app-notifications-dropdown></app-notifications-dropdown>
+
+      <!-- Avatar -->
+      <a [routerLink]="['/profile']" class="btn-icon">
+        <div class="avatar">
+          {{ (currentUser.first_name || currentUser.email || 'U').charAt(0).toUpperCase() }}
+        </div>
+      </a>
+
+      <button (click)="onLogout()" class="btn-icon" title="Déconnexion">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"/>
+        </svg>
+      </button>
+    } @else {
+      <a [routerLink]="['/login']" class="btn-save">
+        Connexion
+      </a>
+    }
+  </div>
+</nav>
+
+<style>
+.nav-link {
+  @apply px-3 py-2 rounded-xl font-medium transition-all duration-300;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.active-nav-link {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+</style>

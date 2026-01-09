@@ -1,0 +1,21 @@
+<span
+  [class]="'inline-flex items-center rounded-full font-medium transition-colors ' +
+          getSizeClass() + ' ' +
+          (clickable ? 'cursor-pointer hover:bg-primary-200 bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-700')"
+  (click)="onClick()"
+>
+  #{{ tag.name }}
+
+  @if (removable) {
+    <button
+      type="button"
+      (click)="onRemove($event)"
+      class="ml-1 text-current hover:text-red-600 focus:outline-none"
+      title="Supprimer ce tag"
+    >
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  }
+</span>

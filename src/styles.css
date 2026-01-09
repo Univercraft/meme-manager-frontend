@@ -1,0 +1,1926 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pinterest: #e60023;
+  --color-pinterest-hover: #ad081b;
+}
+
+/* Reset complet */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  background: #ffffff;
+  color: #333333;
+  line-height: 1.5;
+}
+
+/* Grille Masonry Pinterest authentique */
+.masonry-grid {
+  column-count: 2;
+  column-gap: 16px;
+  padding: 16px 8px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .masonry-grid {
+    column-count: 3;
+    column-gap: 20px;
+    padding: 20px 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .masonry-grid {
+    column-count: 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry-grid {
+    column-count: 5;
+  }
+}
+
+@media (min-width: 1280px) {
+  .masonry-grid {
+    column-count: 6;
+  }
+}
+
+@media (min-width: 1536px) {
+  .masonry-grid {
+    column-count: 7;
+  }
+}
+
+.masonry-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 16px;
+  break-inside: avoid;
+}
+
+@media (min-width: 640px) {
+  .masonry-item {
+    margin-bottom: 20px;
+  }
+}
+
+/* Cartes Pinterest */
+.pin-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: #fff;
+  transition: all 0.15s ease;
+}
+
+.pin-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pin-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+.pin-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.5) 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pin-card:hover .pin-overlay {
+  opacity: 1;
+}
+
+/* Bouton Save Pinterest */
+.btn-save {
+  background: #e60023;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(230, 0, 35, 0.4);
+}
+
+.btn-save:hover {
+  background: #ad081b;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.5);
+}
+
+/* Navigation Pinterest */
+.pinterest-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  border-bottom: 1px solid #efefef;
+  width: 100%;
+}
+
+.nav-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-pinterest {
+  width: 40px;
+  height: 40px;
+  background: #e60023;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.logo-pinterest:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
+}
+
+.nav-item {
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.nav-item:hover {
+  background: #f0f0f0;
+}
+
+.nav-item.active {
+  background: #f0f0f0;
+  color: #e60023;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 800px;
+  position: relative;
+  margin: 0 12px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border-radius: 20px;
+  border: none;
+  background: #efefef;
+  font-size: 15px;
+  transition: background 0.15s ease;
+}
+
+.search-input:hover {
+  background: #e1e1e1;
+}
+
+.search-input:focus {
+  background: #e1e1e1;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #767676;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.btn-icon:hover {
+  background: #f0f0f0;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e60023, #ad081b);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.btn-save {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: #e60023;
+  color: white;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(230, 0, 35, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background: #ad081b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-item:not(:first-of-type) {
+    display: none;
+  }
+  
+  .search-bar {
+    max-width: 100%;
+  }
+}
+
+/* ============================================
+   PAGES AVEC STYLE UNIFIÉ
+   ============================================ */
+
+/* Login / Register pages */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef5f7 0%, #ffffff 100%);
+  padding: 24px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 484px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.login-logo {
+  width: 64px;
+  height: 64px;
+  background: #e60023;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 24px;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  text-align: center;
+  color: #767676;
+  margin-bottom: 32px;
+}
+
+/* Profile page style */
+.profile-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fef5f7 0%, #ffffff 100%);
+}
+
+.profile-header {
+  background: white;
+  border-bottom: 1px solid #efefef;
+  padding: 32px 16px;
+}
+
+.profile-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-avatar-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e60023, #ad081b);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  box-shadow: 0 8px 32px rgba(230, 0, 35, 0.2);
+}
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+
+.admin-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================
+   PAGE PROFIL - STYLE PINTEREST
+   ============================================ */
+
+.profile-header-section {
+  background: linear-gradient(135deg, #fef5f7 0%, #ffffff 100%);
+  border-bottom: 1px solid #efefef;
+  padding: 48px 16px;
+}
+
+.profile-header-container {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e60023, #ad081b);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  box-shadow: 0 8px 32px rgba(230, 0, 35, 0.2);
+}
+
+.admin-badge-profile {
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white;
+  border: 3px solid white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+.admin-badge-profile svg {
+  width: 12px;
+  height: 12px;
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.profile-email {
+  font-size: 16px;
+  color: #767676;
+  margin: 0;
+}
+
+.profile-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 8px;
+}
+
+.profile-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-stat-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.profile-stat-label {
+  font-size: 14px;
+  color: #767676;
+  margin-top: 2px;
+}
+
+.profile-stat-divider {
+  width: 1px;
+  height: 32px;
+  background: #ddd;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn-secondary-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary-profile:hover {
+  background: #e1e1e1;
+  transform: translateY(-2px);
+}
+
+.profile-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+/* ============================================
+   PAGE LOGIN - STYLE PINTEREST COHÉRENT
+   ============================================ */
+
+/* Déjà défini dans le CSS existant, mais on s'assure de la cohérence */
+.login-container {
+  min-h-screen: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef5f7 0%, #ffffff 100%);
+  padding: 24px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 484px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.login-logo {
+  width: 64px;
+  height: 64px;
+  background: #e60023;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 24px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  text-align: center;
+  color: #767676;
+  margin-bottom: 32px;
+}
+
+/* Forms in login */
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 16px;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  margin-bottom: 4px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #e60023;
+  background: #fafafa;
+}
+
+.form-input.error {
+  border-color: #e60023;
+}
+
+.form-error {
+  color: #e60023;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: #e60023;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: 8px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #ad081b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: #767676;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.divider span {
+  padding: 0 16px;
+}
+
+.link-text {
+  text-align: center;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.link-text:hover {
+  color: #e60023;
+}
+
+/* Alerts */
+.alert {
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.alert-error {
+  background: #fee;
+  color: #c00;
+  border: 1px solid #fcc;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #dcfce7;
+}
+
+/* ============================================
+   GRILLE FIXE 4 COLONNES - VERSION FINALE
+   ============================================ */
+
+.grid-fixed {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 24px 16px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.grid-item {
+  width: 100%;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1400px) {
+  .grid-fixed {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-fixed {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-fixed {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-fixed {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px 8px;
+  }
+}
+
+/* ============================================
+   CARTES PINTEREST - ASPECT FINAL
+   ============================================ */
+
+.pinterest-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.pinterest-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+/* Container de l'image avec overlay */
+.pinterest-card > div:first-child {
+  position: relative;
+  width: 100%;
+}
+
+.pinterest-card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pinterest-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  pointer-events: none;
+}
+
+.pinterest-card:hover .pinterest-card-overlay {
+  opacity: 1;
+}
+
+.pinterest-card-overlay > * {
+  pointer-events: auto;
+}
+
+/* Stats dans l'overlay */
+.card-stats-overlay {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.card-stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-weight: 600;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.card-stat-item svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* Bouton save dans l'overlay */
+.btn-save-compact {
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.btn-save-compact:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.btn-save-compact.saved {
+  background: #e60023;
+  box-shadow: 0 2px 8px rgba(230, 0, 35, 0.4);
+}
+
+.btn-save-compact svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bouton Like (référencement) */
+.btn-like-compact {
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.btn-like-compact:hover {
+  background: #e60023;
+  transform: scale(1.1);
+}
+
+.btn-like-compact svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Tags */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.card-tag {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  color: #767676;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.card-tag-more {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: #e1e1e1;
+  color: #333;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ============================================
+   ICÔNES - TAILLES STANDARDISÉES
+   ============================================ */
+
+.icon-xs {
+  width: 12px;
+  height: 12px;
+}
+
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-md {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================================
+   UTILITAIRES
+   ============================================ */
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton loaders */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 16px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   PAGE CREATE MEME - STYLE PINTEREST
+   ============================================ */
+
+.create-header {
+  background: white;
+  border-bottom: 1px solid #efefef;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.create-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.create-title {
+  flex: 1;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.create-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.create-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .create-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Upload zone */
+.create-upload-zone {
+  position: sticky;
+  top: 80px;
+}
+
+.upload-dropzone {
+  border: 2px dashed #ddd;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fafafa;
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-dropzone:hover {
+  border-color: #e60023;
+  background: #fff5f7;
+}
+
+.upload-dropzone.has-image {
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #767676;
+}
+
+.upload-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.upload-subtitle {
+  font-size: 14px;
+  color: #767676;
+  margin: 0;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.upload-preview {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-remove-image {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-remove-image:hover {
+  background: #fee;
+  transform: scale(1.1);
+}
+
+/* Form fields */
+.create-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-input,
+.form-select {
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #e60023;
+}
+
+.form-input.error {
+  border-color: #e60023;
+}
+
+.form-error {
+  font-size: 12px;
+  color: #e60023;
+  margin: 0;
+}
+
+/* Tags */
+.tags-selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #e60023;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-chip:hover {
+  background: #c50020;
+  transform: scale(1.05);
+}
+
+.tags-available {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-available:hover {
+  background: #e1e1e1;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   PAGE ACCUEIL - HERO BANNER
+   ============================================ */
+
+.hero-banner {
+  background: linear-gradient(135deg, #fef5f7 0%, #fff 100%);
+  padding: 80px 24px;
+  text-align: center;
+  border-bottom: 1px solid #efefef;
+}
+
+.hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: #767676;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 60px 24px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+}
+
+/* ============================================
+   BARRE DE FILTRES
+   ============================================ */
+
+.filter-bar {
+  position: sticky;
+  top: 57px;
+  z-index: 90;
+  background: white;
+  border-bottom: 1px solid #efefef;
+  padding: 12px 0;
+}
+
+.filter-content {
+  max-width: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 10px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  background: #f0f0f0;
+}
+
+.filter-tab.active {
+  background: #333;
+  color: white;
+}
+
+.btn-create-float {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #e60023;
+  color: white;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(230, 0, 35, 0.3);
+}
+
+.btn-create-float:hover {
+  background: #ad081b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.4);
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 16px;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: #767676;
+  font-weight: 500;
+}
+
+/* ============================================
+   LOAD MORE
+   ============================================ */
+
+.load-more-container {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.btn-load-more {
+  padding: 12px 32px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-load-more:hover:not(:disabled) {
+  background: #e1e1e1;
+  transform: translateY(-2px);
+}
+
+.btn-load-more:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+  opacity: 0.3;
+}
+
+.empty-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empty-text {
+  font-size: 16px;
+  color: #767676;
+  margin-bottom: 32px;
+  max-width: 400px;
+}
+
+/* ============================================
+   SCROLL TO TOP
+   ============================================ */
+
+.btn-scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.btn-scroll-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-scroll-top svg {
+  color: #333;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   ALERT ERROR
+   ============================================ */
+
+.alert-error {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 16px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 12px;
+}
+
+.detail-header {
+  position: sticky;
+  top: 57px;
+  z-index: 90;
+  background: white;
+  border-bottom: 1px solid #efefef;
+}
+
+.detail-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon-danger:hover {
+  background: #fee;
+}
+
+.btn-icon-danger svg {
+  color: #e60023;
+}
+
+.detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .detail-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Image container */
+.detail-image-container {
+  position: sticky;
+  top: 120px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.detail-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Info panel */
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detail-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.detail-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.detail-user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.detail-date {
+  font-size: 14px;
+  color: #767676;
+  margin: 0;
+}
+
+.avatar-lg {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+
+.btn-save-liked {
+  background: #333;
+}
+
+.detail-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.detail-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.detail-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #767676;
+  font-weight: 600;
+}
+
+.detail-stat svg {
+  color: #333;
+}
+
+.detail-separator {
+  width: 100%;
+  height: 1px;
+  background: #efefef;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-chip-view {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #f0f0f0;
+  color: #333;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.tag-chip-view:hover {
+  background: #e1e1e1;
+  transform: translateY(-2px);
+}
+
+.detail-empty-text {
+  font-size: 15px;
+  color: #767676;
+  margin: 0;
+}
+
+/* ============================================
+   MEME CARDS - VERSION OPTIMISÉE
+   ============================================ */
+
+.pinterest-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.pinterest-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+/* Image avec hauteur auto pour garder le ratio */
+.pinterest-card-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px 16px 0 0;
+}
+
+.pinterest-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.5) 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.pinterest-card:hover .pinterest-card-overlay {
+  opacity: 1;
+}
+
+/* Stats dans l'overlay */
+.card-stats-overlay {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.card-stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-weight: 600;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.card-stat-item svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Bouton save compact */
+.btn-save-compact {
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.btn-save-compact:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.btn-save-compact.saved {
+  background: #e60023;
+  box-shadow: 0 2px 8px rgba(230, 0, 35, 0.4);
+}
+
+.btn-save-compact svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bouton Like (référencement) */
+.btn-like-compact {
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.btn-like-compact:hover {
+  background: #e60023;
+  transform: scale(1.1);
+}
+
+.btn-like-compact svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Tags */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.card-tag {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  color: #767676;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.card-tag-more {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: #e1e1e1;
+  color: #333;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ============================================
+   BOUTONS D'ACTION FLOTTANTS
+   ============================================ */
+
+.floating-actions {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 100;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e60023;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(230, 0, 35, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.fab:hover {
+  background: #ad081b;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(230, 0, 35, 0.5);
+}
+
+.fab svg {
+  width: 24px;
+  height: 24px;
+}
+
+.fab-secondary {
+  width: 48px;
+  height: 48px;
+  background: white;
+  color: #e60023;
+  border: 2px solid #e60023;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fab-secondary:hover {
+  background: #fef5f7;
+  color: #ad081b;
+  border-color: #ad081b;
+  box-shadow: 0 4px 16px rgba(230, 0, 35, 0.2);
+}
+
+@media (max-width: 768px) {
+  .floating-actions {
+    bottom: 24px;
+    right: 24px;
+    gap: 12px;
+  }
+
+  .fab {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fab svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .fab-secondary {
+    width: 40px;
+    height: 40px;
+  }
+
+  .fab-secondary svg {
+    width: 18px;
+    height: 18px;
+  }
+}

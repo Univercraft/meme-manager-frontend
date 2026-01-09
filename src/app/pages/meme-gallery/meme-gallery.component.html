@@ -1,0 +1,155 @@
+<div class="min-h-screen bg-white">
+  <!-- Hero section minimaliste -->
+  @if (!isAuthenticated) {
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 class="hero-title">Bienvenue sur Meme Manager</h1>
+        <p class="hero-subtitle">Découvrez, créez et partagez les meilleurs memes</p>
+        <a routerLink="/login" class="btn-save">
+          Commencer maintenant
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Barre de filtres -->
+  <div class="filter-bar">
+    <div class="filter-content">
+      <div class="filter-tabs">
+        <button class="filter-tab active">
+          Tous
+        </button>
+        <button class="filter-tab">
+          Populaires
+        </button>
+        <button class="filter-tab">
+          Récents
+        </button>
+      </div>
+
+      @if (isAuthenticated) {
+        <a routerLink="/create-meme" class="btn-create-float">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+          <span class="hidden md:inline">Créer</span>
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  @if (isLoading && memes.length === 0) {
+    <div class="loading-state">
+      <div class="spinner spinner-lg"></div>
+      <p class="loading-text">Chargement des memes...</p>
+    </div>
+  }
+
+  <!-- Message d'erreur -->
+  @if (error) {
+    <div class="container-pinterest py-4">
+      <div class="alert-error">
+        <svg class="icon-md" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        <div>
+          <p class="font-semibold">{{ error }}</p>
+          <button (click)="loadMemes(true)" class="text-sm underline hover:no-underline mt-1">
+            Réessayer
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Grille fixe 4 colonnes -->
+  @if (memes.length > 0) {
+    <div class="grid-fixed container-pinterest">
+      @for (meme of memes; track meme.id) {
+        <div class="grid-item fade-in">
+          <app-meme-card
+            [meme]="meme"
+            (memeClicked)="onMemeClicked($event)"
+            (likeClicked)="onLikeClicked($event)"
+          ></app-meme-card>
+        </div>
+      }
+    </div>
+
+    <!-- Bouton charger plus -->
+    @if (hasMore) {
+      <div class="load-more-container">
+        <button
+          (click)="loadMore()"
+          [disabled]="isLoading"
+          class="btn-load-more"
+        >
+          @if (isLoading) {
+            <span class="inline-flex items-center gap-2">
+              <span class="spinner spinner-sm"></span>
+              Chargement...
+            </span>
+          } @else {
+            <span>Afficher plus</span>
+          }
+        </button>
+      </div>
+    }
+  }
+
+  <!-- État vide -->
+  @if (!isLoading && memes.length === 0 && !error) {
+    <div class="empty-state">
+      <div class="empty-icon">📌</div>
+      <h2 class="empty-title">Aucune épingle pour le moment</h2>
+      <p class="empty-text">Soyez le premier à partager un meme !</p>
+      @if (isAuthenticated) {
+        <a routerLink="/create-meme" class="btn-save">
+          Créer une épingle
+        </a>
+      } @else {
+        <a routerLink="/login" class="btn-save">
+          Se connecter pour créer
+        </a>
+      }
+    </div>
+  }
+
+  <!-- Bouton scroll to top -->
+  @if (memes.length > 10) {
+    <button
+      (click)="scrollToTop()"
+      class="btn-scroll-top"
+      aria-label="Retour en haut"
+    >
+      <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+      </svg>
+    </button>
+  }
+
+  <!-- Boutons d'action flottants -->
+  @if (isAuthenticated) {
+    <div class="floating-actions">
+      <!-- Bouton Favoris -->
+      <a 
+        [routerLink]="['/profile']" 
+        [queryParams]="{ tab: 'saved' }"
+        class="fab fab-secondary"
+        title="Mes favoris"
+      >
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+        </svg>
+      </a>
+
+      <!-- Bouton Créer -->
+      <a routerLink="/create-meme" class="fab" title="Créer un meme">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+        </svg>
+      </a>
+    </div>
+  }
+</div>

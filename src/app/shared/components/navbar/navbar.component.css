@@ -1,0 +1,5 @@
+/* Styles */
+/* Notifications dans la navbar */
+.nav-container app-notifications-dropdown {
+  display: inline-block;
+}

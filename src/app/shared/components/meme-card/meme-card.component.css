@@ -1,0 +1,10 @@
+:host {
+  display: block;
+}
+
+.pinterest-card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px 16px 0 0;
+}

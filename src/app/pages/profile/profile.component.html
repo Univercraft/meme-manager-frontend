@@ -1,0 +1,150 @@
+<div class="min-h-screen bg-white">
+  <!-- Header profil -->
+  <div class="profile-header-section">
+    <div class="profile-header-container">
+      <div class="profile-avatar-wrapper">
+        <div class="profile-avatar-large">
+          {{ (currentUser?.first_name || currentUser?.email || 'U').charAt(0) | uppercase }}
+        </div>
+        
+        @if (isAdmin()) {
+          <span class="admin-badge-profile">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+            </svg>
+            Admin
+          </span>
+        }
+      </div>
+
+      <h1 class="profile-name">
+        {{ currentUser?.first_name }} {{ currentUser?.last_name }}
+      </h1>
+      <p class="profile-email">{{ currentUser?.email }}</p>
+
+      <div class="profile-stats-row">
+        <div class="profile-stat-item">
+          <span class="profile-stat-number">{{ userMemes.length }}</span>
+          <span class="profile-stat-label">Memes</span>
+        </div>
+        <div class="profile-stat-divider"></div>
+        <div class="profile-stat-item">
+          <span class="profile-stat-number">{{ getTotalLikes() }}</span>
+          <span class="profile-stat-label">Likes</span>
+        </div>
+        <div class="profile-stat-divider"></div>
+        <div class="profile-stat-item">
+          <span class="profile-stat-number">{{ getTotalViews() }}</span>
+          <span class="profile-stat-label">Vues</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button routerLink="/create-meme" class="btn-save">
+          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+          Créer un meme
+        </button>
+        <button (click)="onLogout()" class="btn-secondary-profile">
+          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"/>
+          </svg>
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content avec onglets -->
+  <div class="profile-content">
+    <!-- Onglets -->
+    <div class="profile-tabs">
+      <button 
+        (click)="switchTab('created')" 
+        class="profile-tab"
+        [class.active]="activeTab === 'created'"
+      >
+        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span>Mes memes ({{ userMemes.length }})</span>
+      </button>
+      
+      <button 
+        (click)="switchTab('saved')" 
+        class="profile-tab"
+        [class.active]="activeTab === 'saved'"
+      >
+        <svg class="icon-sm" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+        </svg>
+        <span>Enregistrés ({{ savedMemes.length }})</span>
+      </button>
+    </div>
+
+    <!-- Contenu des onglets -->
+    @if (isLoading) {
+      <div class="loading-state">
+        <div class="spinner spinner-lg"></div>
+        <p class="loading-text">Chargement...</p>
+      </div>
+    }
+
+    <!-- Onglet "Mes memes" -->
+    @if (!isLoading && activeTab === 'created') {
+      @if (userMemes.length > 0) {
+        <div class="grid-fixed">
+          @for (meme of userMemes; track meme.id) {
+            <div class="grid-item fade-in">
+              <app-meme-card
+                [meme]="meme"
+                (memeClicked)="onMemeClicked($event)"
+              ></app-meme-card>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-icon">🎨</div>
+          <h3 class="empty-title">Aucun meme pour le moment</h3>
+          <p class="empty-text">Créez votre premier meme pour commencer</p>
+          <button routerLink="/create-meme" class="btn-save">
+            Créer un meme
+          </button>
+        </div>
+      }
+    }
+
+    <!-- Onglet "Enregistrés" -->
+    @if (!isLoading && activeTab === 'saved') {
+      <!-- Debug info (à retirer après test) -->
+      <div style="padding: 16px; background: #f0f0f0; margin-bottom: 16px; border-radius: 8px;">
+        <p><strong>Debug:</strong> {{ savedMemes.length }} meme(s) enregistré(s)</p>
+        <pre style="font-size: 11px; overflow: auto;">{{ savedMemes | json }}</pre>
+      </div>
+
+      @if (savedMemes.length > 0) {
+        <div class="grid-fixed">
+          @for (meme of savedMemes; track meme.id) {
+            <div class="grid-item fade-in">
+              <app-meme-card
+                [meme]="meme"
+                (memeClicked)="onMemeClicked($event)"
+              ></app-meme-card>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-icon">🔖</div>
+          <h3 class="empty-title">Aucun meme enregistré</h3>
+          <p class="empty-text">Enregistrez vos memes préférés pour les retrouver facilement</p>
+          <button routerLink="/gallery" class="btn-save">
+            Découvrir des memes
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>
